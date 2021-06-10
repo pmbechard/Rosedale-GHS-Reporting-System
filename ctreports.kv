@@ -8,7 +8,6 @@ WindowManager:
     CommentSelectionWindow:
         id: comment_select
 
-
 <LogInWindow>:
     name: "login"
 
@@ -17,7 +16,7 @@ WindowManager:
 
         canvas.before:
             Color:
-                rgba: 225/255, 225/255, 255/255, .9
+                rgba: 20/255, 33/255, 61/255, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -25,10 +24,13 @@ WindowManager:
 
         Label:
             text: "Log in below using your Rosedale credentials:"
+            font_size: 32
+            color: 1, 1, 1, 1
+            outline_width: 2
+            outline_color: 0, 0, 0
             size_hint: None, None
             size: 100, 20
             bold: True
-            color: 0, 0, 0, 1
             pos_hint: {"center_x": .5, "top": .70}
 
         TextInput:
@@ -40,6 +42,7 @@ WindowManager:
             size_hint: None, None
             size: 400, 40
             pos_hint: {"center_x": .5, "center_y": .60}
+            background_color: 229/255, 229/255, 229/255, 1
 
         TextInput:
             id: password
@@ -56,6 +59,10 @@ WindowManager:
         Button:
             text: "Sign In"
             size_hint: None, None
+            color: 1, 1, 1, 1
+            bold: True
+            font_size: 14
+            background_color: 140/255, 140/255, 140/255, 1
             size: 80, 40
             pos_hint: {"center_x": .5, "center_y": .40}
             on_press: app.get_credentials()
@@ -64,8 +71,9 @@ WindowManager:
             id: warning_label
             size_hint: None, None
             size: 100, 20
-            italic: True
-            color: 1, 0, 0, 1
+            bold: True
+            outline_color: 0, 0, 0, 1
+            color: 252/255, 163/255, 17/255, 1
             pos_hint: {"center_x": .5, "top": .30}
 
 <CourseSelectionWindow>:
@@ -77,15 +85,17 @@ WindowManager:
 
         canvas.before:
             Color:
-                rgba: 225/255, 225/255, 255/255, .9
+                rgba: 20/255, 33/255, 61/255, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
-
         Label:
             id: welcome_text
             bold: True
-            color: 0, 0, 0, 1
+            font_size: 32
+            color: 1, 1, 1, 1
+            outline_width: 2
+            outline_color: 0, 0, 0
             size_hint: None, None
             pos_hint: {"center_x": .5, "top": 1}
 
@@ -94,6 +104,10 @@ WindowManager:
             text: "Next"
             size_hint: None, None
             size: 80, 40
+            color: 1, 1, 1, 1
+            bold: True
+            font_size: 14
+            background_color: 140/255, 140/255, 140/255, 1
             pos_hint: {"center_x": .5, "center_y": .20}
             on_press: app.get_class_list(app.root.ids.course.text)
 
@@ -106,7 +120,7 @@ WindowManager:
 
         canvas.before:
             Color:
-                rgba: 225/255, 225/255, 255/255, .9
+                rgba: 20/255, 33/255, 61/255, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -116,56 +130,77 @@ WindowManager:
             cols: 7
             size_hint_y: None
             height: self.minimum_height
-            spacing: 10
-            padding: 10
+            col_force_default: True
+            col_default_width: (self.width-200)/6
 
             Label:
                 text: "Student"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Responsibility"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Organization"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Independence"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Collaboration"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Initiative"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Self-Regulation"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
 
@@ -176,11 +211,13 @@ WindowManager:
             scroll_type: ['bars']
 
             GridLayout:
-                id: grade_select_layout
+                id: grade_select_layout_l2
                 cols: 7
-                size_hint: 1, None
+                size_hint_y: None
                 height: self.minimum_height
-                spacing: 10
+                size: root.size
+                col_force_default: True
+                col_default_width: (self.width-200)/6
 
 
         Button:
@@ -190,6 +227,10 @@ WindowManager:
             width: self.width
             height: 40
             pos_hint_x: .5
+            color: 1, 1, 1, 1
+            bold: True
+            font_size: 14
+            background_color: 140/255, 140/255, 140/255, 1
             on_press: app.save_grades()
 
 
@@ -201,7 +242,7 @@ WindowManager:
 
         canvas.before:
             Color:
-                rgba: 225/255, 225/255, 255/255, .9
+                rgba: 20/255, 33/255, 61/255, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -219,21 +260,30 @@ WindowManager:
                 size_hint: None, None
                 height: 40
                 width: 200
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Comment 1"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
             Label:
                 text: "Comment 2"
                 size_hint_y: None
                 height: 40
-                color: 0, 0, 0, 1
+                color: 229/255, 229/255, 229/255, 1
+                outline_color: 0, 0, 0, 1
+                outline_width: 1
+                font_size: 18
                 bold: True
 
 
@@ -257,5 +307,9 @@ WindowManager:
             width: self.width
             height: 40
             pos_hint_x: .5
+            color: 1, 1, 1, 1
+            bold: True
+            font_size: 14
+            background_color: 140/255, 140/255, 140/255, 1
             on_press: app.submit()
 

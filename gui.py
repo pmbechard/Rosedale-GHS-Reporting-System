@@ -1,10 +1,15 @@
+import textwrap
+
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 from kivy.config import Config
 from kivy.core.window import Window
-from kivy.uix.spinner import Spinner
+from kivy.uix.spinner import Spinner, SpinnerOption
 from kivy.uix.textinput import TextInput
 
 from main import *
@@ -37,6 +42,10 @@ class WindowManager(ScreenManager):
     pass
 
 
+class CommentSpinners(SpinnerOption):
+    font_size = 10
+
+
 class CTReportsApp(App):
     def build(self):
         kv = Builder.load_file('ctreports.kv')
@@ -60,12 +69,13 @@ class CTReportsApp(App):
         course_list = [x for x in courses_dict.values()]
 
         course_menu = Spinner(text="Select a course:", values=course_list, size_hint=(None, None), height=35, width=500,
-                            pos_hint={"center_x": .5, "center_y": .8})
+                            pos_hint={"center_x": .5, "center_y": .8}, background_color=(140/255, 140/255, 140/255, 1))
         self.root.ids.course_select.ids.course_select_layout.add_widget(course_menu)
         self.root.ids["course"] = course_menu
 
         term_menu = Spinner(text="Select the term:", values=["Midterm", "Final"], size_hint=(None, None),
-                            height=35, width=500, pos_hint={"center_x": .5, "center_y": .7})
+                            height=35, width=500, pos_hint={"center_x": .5, "center_y": .7},
+                            background_color=(140/255, 140/255, 140/255, 1))
         self.root.ids.course_select.ids.course_select_layout.add_widget(term_menu)
         self.root.ids["term"] = term_menu
 
@@ -77,16 +87,20 @@ class CTReportsApp(App):
 
         for student in class_list:
             student_grades_dict[class_list.index(student)] = {}
-            self.root.ids.grade_select.ids.grade_select_layout.add_widget(Label(text=student, color=(0, 0, 0, 1),
-                                                                                size_hint=(None, None),
-                                                                                width=200, height=60))
+            self.root.ids.grade_select.ids.grade_select_layout_l2.add_widget(Label(text=student,
+                                                                                   color=(252/255, 163/255, 17/255, 1),
+                                                                                   size_hint_y=None, halign='left',
+                                                                                   height=60, bold=True,))
             for i in range(6):
                 student_grades_dict[class_list.index(student)][i] = {}
                 grade_index = f'r{class_list.index(student)}c{i}'
-                grade_field = TextInput(size_hint_y=None, height=40,
-                                        pos_hint={'center_x': .5, 'center_y': .5},
-                                        write_tab=False, multiline=False, halign='center')
-                self.root.ids.grade_select.ids.grade_select_layout.add_widget(grade_field)
+                grade_field = TextInput(size_hint=(None, None), height=40, width=40, halign='center',
+                                        write_tab=False, multiline=False)
+                anchor = AnchorLayout(anchor_x='center', anchor_y='center')
+                self.root.ids.grade_select.ids.grade_select_layout_l2.add_widget(anchor)
+                self.root.ids['anchor'] = anchor
+
+                self.root.ids.anchor.add_widget(grade_field)
                 self.root.ids[grade_index] = grade_field
 
     def save_grades(self):
@@ -99,14 +113,17 @@ class CTReportsApp(App):
         comments = comments_options(class_list, student_grades_dict)
 
         for student in class_list:
-            self.root.ids.comment_select.ids.comment_select_layout.add_widget(Label(text=student, color=(0, 0, 0, 1),
+            self.root.ids.comment_select.ids.comment_select_layout.add_widget(Label(text=student,
+                                                                                    color=(252/255, 163/255, 17/255, 1),
                                                                                     size_hint=(None, None),
-                                                                                    width=200, height=60))
-            comment_1 = Spinner(text="Select a comment:", values=comments[student])
+                                                                                    width=200, height=60, bold=True))
+            comment_1 = Spinner(text="Select a comment:", values=comments[student], font_size=10,
+                                option_cls=CommentSpinners, background_color=(140/255, 140/255, 140/255, 1))
             self.root.ids.comment_select.ids.comment_select_layout.add_widget(comment_1)
             self.root.ids[f"{class_list.index(student)}-comment_1"] = comment_1
 
-            comment_2 = Spinner(text="Select a comment:", values=comments[student])
+            comment_2 = Spinner(text="Select a comment:", values=comments[student], font_size=10,
+                                option_cls=CommentSpinners, background_color=(140/255, 140/255, 140/255, 1))
             self.root.ids.comment_select.ids.comment_select_layout.add_widget(comment_2)
             self.root.ids[f"{class_list.index(student)}-comment_2"] = comment_2
 
@@ -115,6 +132,7 @@ class CTReportsApp(App):
             comment_dict[student] = [self.root.ids[f"{class_list.index(student)}-comment_1"].text,
                                      self.root.ids[f"{class_list.index(student)}-comment_2"].text]
         doc_creation(self.root.ids.course.text, class_list, term, student_grades_dict, comment_dict)
+        CTReportsApp().get_running_app().stop()
 
 
 if __name__ == '__main__':
