@@ -1,0 +1,261 @@
+WindowManager:
+    LogInWindow:
+        id: login
+    CourseSelectionWindow:
+        id: course_select
+    GradeSelectionWindow:
+        id: grade_select
+    CommentSelectionWindow:
+        id: comment_select
+
+
+<LogInWindow>:
+    name: "login"
+
+    FloatLayout:
+        size: root.width, root.height
+
+        canvas.before:
+            Color:
+                rgba: 225/255, 225/255, 255/255, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+        Label:
+            text: "Log in below using your Rosedale credentials:"
+            size_hint: None, None
+            size: 100, 20
+            bold: True
+            color: 0, 0, 0, 1
+            pos_hint: {"center_x": .5, "top": .70}
+
+        TextInput:
+            id: username
+            hint_text: "username/email"
+            halign: "center"
+            multiline: False
+            write_tab: False
+            size_hint: None, None
+            size: 400, 40
+            pos_hint: {"center_x": .5, "center_y": .60}
+
+        TextInput:
+            id: password
+            hint_text: "password"
+            halign: "center"
+            multiline: False
+            write_tab: False
+            size_hint: None, None
+            size: 400, 40
+            pos_hint: {"center_x": .5, "center_y": .50}
+            password: True
+            on_text_validate: app.get_credentials()
+
+        Button:
+            text: "Sign In"
+            size_hint: None, None
+            size: 80, 40
+            pos_hint: {"center_x": .5, "center_y": .40}
+            on_press: app.get_credentials()
+
+        Label:
+            id: warning_label
+            size_hint: None, None
+            size: 100, 20
+            italic: True
+            color: 1, 0, 0, 1
+            pos_hint: {"center_x": .5, "top": .30}
+
+<CourseSelectionWindow>:
+    name: "course_select"
+
+    FloatLayout:
+        id: course_select_layout
+        size: root.width, root.height
+
+        canvas.before:
+            Color:
+                rgba: 225/255, 225/255, 255/255, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            id: welcome_text
+            bold: True
+            color: 0, 0, 0, 1
+            size_hint: None, None
+            pos_hint: {"center_x": .5, "top": 1}
+
+        Button:
+            id: next
+            text: "Next"
+            size_hint: None, None
+            size: 80, 40
+            pos_hint: {"center_x": .5, "center_y": .20}
+            on_press: app.get_class_list(app.root.ids.course.text)
+
+
+<GradeSelectionWindow>:
+    name: "grade_select"
+
+    BoxLayout:
+        orientation: "vertical"
+
+        canvas.before:
+            Color:
+                rgba: 225/255, 225/255, 255/255, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        GridLayout:
+            id: grade_select_layout
+            cols: 7
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: 10
+            padding: 10
+
+            Label:
+                text: "Student"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Responsibility"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Organization"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Independence"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Collaboration"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Initiative"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Self-Regulation"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+
+        ScrollView:
+            always_overscroll: True
+            bar_pos_y: "right"
+            bar_width: 10
+            scroll_type: ['bars']
+
+            GridLayout:
+                id: grade_select_layout
+                cols: 7
+                size_hint: 1, None
+                height: self.minimum_height
+                spacing: 10
+
+
+        Button:
+            id: save_grades_button
+            text: "Save"
+            size_hint: None, None
+            width: self.width
+            height: 40
+            pos_hint_x: .5
+            on_press: app.save_grades()
+
+
+<CommentSelectionWindow>:
+    name: "comment_select"
+
+    BoxLayout:
+        orientation: "vertical"
+
+        canvas.before:
+            Color:
+                rgba: 225/255, 225/255, 255/255, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        GridLayout:
+            id: comment_select_layout
+            cols: 3
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: 10
+            padding: 10
+
+            Label:
+                text: "Student"
+                size_hint: None, None
+                height: 40
+                width: 200
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Comment 1"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+            Label:
+                text: "Comment 2"
+                size_hint_y: None
+                height: 40
+                color: 0, 0, 0, 1
+                bold: True
+
+
+        ScrollView:
+            always_overscroll: True
+            bar_pos_y: "right"
+            bar_width: 10
+            scroll_type: ['bars']
+
+            GridLayout:
+                id: comment_select_layout
+                cols: 3
+                size_hint: 1, None
+                height: self.minimum_height
+                spacing: 10
+
+        Button:
+            id: save_comments_button
+            text: "Finish"
+            size_hint: None, None
+            width: self.width
+            height: 40
+            pos_hint_x: .5
+            on_press: app.submit()
+
