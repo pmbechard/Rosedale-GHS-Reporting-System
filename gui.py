@@ -1,6 +1,12 @@
+import os
+
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 from kivy.config import Config
@@ -31,6 +37,10 @@ class GradeSelectionWindow(Screen):
 
 
 class CommentSelectionWindow(Screen):
+    pass
+
+
+class SaveWindow(Screen):
     pass
 
 
@@ -128,11 +138,15 @@ class CTReportsApp(App):
             self.root.ids.comment_select.ids.comment_select_layout.add_widget(comment_2)
             self.root.ids[f"{class_list.index(student)}-comment_2"] = comment_2
 
+    def save_location(self):
+        self.root.current = "save_window"
+
     def submit(self):
         for student in class_list:
             comment_dict[student] = [self.root.ids[f"{class_list.index(student)}-comment_1"].text,
                                      self.root.ids[f"{class_list.index(student)}-comment_2"].text]
-        doc_creation(self.root.ids.course.text, class_list, term, student_grades_dict, comment_dict)
+        location = self.root.ids.save_window.ids.file_chooser.path
+        doc_creation(self.root.ids.course.text, class_list, term, student_grades_dict, comment_dict, location)
         CTReportsApp().get_running_app().stop()
 
 

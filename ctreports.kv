@@ -7,6 +7,8 @@ WindowManager:
         id: grade_select
     CommentSelectionWindow:
         id: comment_select
+    SaveWindow:
+        id: save_window
 
 <LogInWindow>:
     name: "login"
@@ -320,5 +322,26 @@ WindowManager:
             bold: True
             font_size: 14
             background_color: 140/255, 140/255, 140/255, 1
+            on_press: app.save_location()
+
+<SaveWindow>:
+    name: "save_window"
+
+    BoxLayout:
+        orientation: "vertical"
+
+        FileChooserIconView:
+            id: file_chooser
+
+            canvas.before:
+                Color:
+                    rgba: 20/255, 33/255, 61/255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Button:
+            text: "Save and Close"
+            size_hint_y: .1
             on_press: app.submit()
 

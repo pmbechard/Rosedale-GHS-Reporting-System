@@ -119,15 +119,15 @@ def comments_options(students, grades_dict):
     return available_comments
 
 
-def doc_creation(course_choice, students, term, grades_dict, comments):
+def doc_creation(course_choice, students, term, grades_dict, comments, location):
     global name
     document = Document('CT Comments and Learning Skills.docx')
 
     course_choice = course_choice.split(' ')
     if course_choice[0][0] == '*':
-        document.save(f'{course_choice[0][1:]} - CT Comments and Learning Skills - {date.today()}.docx')
+        document.save(f'{location}/{course_choice[0][1:]} - CT Comments and Learning Skills - {date.today()}.docx')
     else:
-        document.save(f'{course_choice[0]} - CT Comments and Learning Skills - {date.today()}.docx')
+        document.save(f'{location}/{course_choice[0]} - CT Comments and Learning Skills - {date.today()}.docx')
 
     # Fill in first table
     document.tables[0].cell(0, 1).text = 'Northeastern University branch - Shenyang'
@@ -137,9 +137,9 @@ def doc_creation(course_choice, students, term, grades_dict, comments):
     document.tables[0].cell(4, 1).text = str(len(students))
 
     if course_choice[0][0] == '*':
-        document.save(f'{course_choice[0][1:]} - CT Comments and Learning Skills - {date.today()}.docx')
+        document.save(f'{location}/{course_choice[0][1:]} - CT Comments and Learning Skills - {date.today()}.docx')
     else:
-        document.save(f'{course_choice[0]} - CT Comments and Learning Skills - {date.today()}.docx')
+        document.save(f'{location}/{course_choice[0]} - CT Comments and Learning Skills - {date.today()}.docx')
 
     # Check if second table's rows are enough, add more if not; insert student names into rows
     if len(document.tables[1].rows) < len(students):
@@ -162,7 +162,7 @@ def doc_creation(course_choice, students, term, grades_dict, comments):
         count += 1
 
     if course_choice[0][0] == '*':
-        document.save(f'{course_choice[0][1:]} - CT Comments and Learning Skills - {date.today()}.docx')
+        document.save(f'{location}/{course_choice[0][1:]} - CT Comments and Learning Skills - {date.today()}.docx')
     else:
-        document.save(f'{course_choice[0]} - CT Comments and Learning Skills - {date.today()}.docx')
+        document.save(f'{location}/{course_choice[0]} - CT Comments and Learning Skills - {date.today()}.docx')
 
