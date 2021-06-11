@@ -99,6 +99,15 @@ WindowManager:
             size_hint: None, None
             pos_hint: {"center_x": .5, "top": 1}
 
+        Label:
+            id: no_students_warning_label
+            size_hint: None, None
+            size: 100, 20
+            bold: True
+            outline_color: 0, 0, 0, 1
+            color: 252/255, 163/255, 17/255, 1
+            pos_hint: {"center_x": .5, "center_y": .30}
+
         Button:
             id: next
             text: "Next"

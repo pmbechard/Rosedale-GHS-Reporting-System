@@ -78,8 +78,9 @@ def class_list_creation(course_choice):
             for student in class_list:
                 if not student.text.isdigit():
                     students.append(student.text.strip())
-
-    return students
+            if students:
+                return students
+            return None
 
 
 def comments_options(students, grades_dict):

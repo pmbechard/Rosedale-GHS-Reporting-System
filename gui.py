@@ -1,10 +1,6 @@
-import textwrap
-
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 from kivy.config import Config
@@ -60,7 +56,6 @@ class CTReportsApp(App):
             self.root.ids.course_select.ids.welcome_text.text = successful_login
             self.list_available_courses()
         elif not self.root.ids.login.ids.warning_label.text:
-            self.root.ids.login.ids.warning_label.color = 1, 0, 0, 1
             self.root.ids.login.ids.warning_label.text = "Invalid login..."
 
     def list_available_courses(self):
@@ -83,25 +78,31 @@ class CTReportsApp(App):
         global class_list, courses_dict, student_grades_dict, term
         class_list = class_list_creation(course)
         term = self.root.ids["term"].text
-        self.root.current = "grade_select"
+        if not class_list:
+            self.root.ids.course_select.ids.no_students_warning_label.text = "Invalid course selection..."
+        elif term != "Midterm" and term != "Final":
+            self.root.ids.course_select.ids.no_students_warning_label.text = "Invalid term selection..."
+        else:
 
-        for student in class_list:
-            student_grades_dict[class_list.index(student)] = {}
-            self.root.ids.grade_select.ids.grade_select_layout_l2.add_widget(Label(text=student,
-                                                                                   color=(252/255, 163/255, 17/255, 1),
-                                                                                   size_hint_y=None, halign='left',
-                                                                                   height=60, bold=True,))
-            for i in range(6):
-                student_grades_dict[class_list.index(student)][i] = {}
-                grade_index = f'r{class_list.index(student)}c{i}'
-                grade_field = TextInput(size_hint=(None, None), height=40, width=40, halign='center',
-                                        write_tab=False, multiline=False)
-                anchor = AnchorLayout(anchor_x='center', anchor_y='center')
-                self.root.ids.grade_select.ids.grade_select_layout_l2.add_widget(anchor)
-                self.root.ids['anchor'] = anchor
+            self.root.current = "grade_select"
 
-                self.root.ids.anchor.add_widget(grade_field)
-                self.root.ids[grade_index] = grade_field
+            for student in class_list:
+                student_grades_dict[class_list.index(student)] = {}
+                self.root.ids.grade_select.ids.grade_select_layout_l2.add_widget(Label(text=student,
+                                                                                       color=(252/255, 163/255, 17/255, 1),
+                                                                                       size_hint_y=None, halign='left',
+                                                                                       height=60, bold=True,))
+                for i in range(6):
+                    student_grades_dict[class_list.index(student)][i] = {}
+                    grade_index = f'r{class_list.index(student)}c{i}'
+                    grade_field = TextInput(size_hint=(None, None), height=40, width=40, halign='center',
+                                            write_tab=False, multiline=False)
+                    anchor = AnchorLayout(anchor_x='center', anchor_y='center')
+                    self.root.ids.grade_select.ids.grade_select_layout_l2.add_widget(anchor)
+                    self.root.ids['anchor'] = anchor
+
+                    self.root.ids.anchor.add_widget(grade_field)
+                    self.root.ids[grade_index] = grade_field
 
     def save_grades(self):
         self.root.current = "comment_select"
