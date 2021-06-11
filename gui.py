@@ -2,11 +2,7 @@ import os
 
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.label import Label
 from kivy.config import Config
